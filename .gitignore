@@ -4,3 +4,4 @@ zhwiki-20191120-pages-articles-multistream.xml.bz2
 /Step1_preprocessing/articles_after_segs.txt
 /Step1_preprocessing/word2vec_format.txt
 /Step1_preprocessing/.ipynb_checkpoints/
+/step2_generator/without_stopwords/word2vec_format.txt

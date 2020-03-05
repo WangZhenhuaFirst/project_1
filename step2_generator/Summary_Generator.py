@@ -55,30 +55,31 @@ def article_sents(article):
     return sentences
 
 
+# the parameter in the SIF weighting scheme, usually in the range [3e-5, 3e-3]
+weightpara = 1e-3
+
+
 # 词向量文件，词频文件，超参数设置
 wordfile = './step2_generator/without_stopwords/word2vec_format.txt'
 weightfile = './step2_generator/without_stopwords/words_count.txt'
-# the parameter in the SIF weighting scheme, usually in the range [3e-5, 3e-3]
-weightpara = 1e-3
-rmpc = 1  # number of principal components to remove in SIF weighting scheme
-
-# 生成句向量的函数
+# 详见data_io.py
+(words, We) = data_io.getWordmap(wordfile)
+word2weight = data_io.getWordWeight(weightfile, weightpara)
+weight4ind = data_io.getWeight(words, word2weight)
 
 
 def get_sent_vec(sentences):
+    '''生成句向量的函数'''
     import params
-    # 详见data_io.py
-    (words, We) = data_io.getWordmap(wordfile)
-    # 详见data_io.py
-    word2weight = data_io.getWordWeight(weightfile, weightpara)
-    weight4ind = data_io.getWeight(words, word2weight)
     # 详见data_io.py
     x, m = data_io.sentences2idx(sentences, words)
     w = data_io.seq2weight(x, m, weight4ind)
 
     # 参数设置
+    rmpc = 1  # number of principal components to remove in SIF weighting scheme
     params = params.params()
     params.rmpc = rmpc
+
     # 调用SIF核心算法计算句向量，详见SIF_core
     embedding = SIF_core.SIF_embedding(We, x, w, params)
 

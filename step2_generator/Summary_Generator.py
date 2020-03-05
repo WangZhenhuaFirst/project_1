@@ -19,6 +19,7 @@ import params
 import numpy as np
 import os
 from gensim.models import Word2Vec
+import pdb
 
 # 输入文章及标题
 title = input('请输入目标文章的标题：')
@@ -62,6 +63,10 @@ weightpara = 1e-3
 # 词向量文件，词频文件，超参数设置
 wordfile = './step2_generator/without_stopwords/word2vec_format.txt'
 weightfile = './step2_generator/without_stopwords/words_count.txt'
+
+# wordfile = './step2_generator/without_stopwords/all_vec_format.txt'
+# weightfile = './step2_generator/without_stopwords/all_words_count.txt'
+
 # 详见data_io.py
 (words, We) = data_io.getWordmap(wordfile)
 word2weight = data_io.getWordWeight(weightfile, weightpara)
@@ -155,7 +160,9 @@ res = sorted(res, key=lambda d: d[2])
 print(res)
 print(type(res[1][0]))
 result = ''
-for i in range(4):
+# 取原文句子数的 1/3左右作为摘要
+size = (len(res) // 3) + 1
+for i in range(size):
     print(res[i][0])
     result += res[i][0]
 

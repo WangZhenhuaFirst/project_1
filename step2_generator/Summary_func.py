@@ -22,11 +22,19 @@ import SIF_core
 import pdb
 
 
-# 词向量文件，词频文件，超参数设置
-wordfile = './step2_generator/without_stopwords/word2vec_format.txt'
-weightfile = './step2_generator/without_stopwords/words_count.txt'
 weightpara = 1e-3
 rmpc = 1
+
+# 词向量文件，词频文件，超参数设置
+# wordfile = './step2_generator/without_stopwords/word2vec_format.txt'
+# weightfile = './step2_generator/without_stopwords/words_count.txt'
+wordfile = './step2_generator/without_stopwords/all_vec_format.txt'
+weightfile = './step2_generator/without_stopwords/all_words_count.txt'
+
+# 详见data_io.py
+(words, We) = data_io.getWordmap(wordfile)
+word2weight = data_io.getWordWeight(weightfile, weightpara)
+weight4ind = data_io.getWeight(words, word2weight)
 
 
 def summary_func(title, content):
@@ -67,11 +75,6 @@ def summary_func(title, content):
     # 生成句向量的函数
     def get_sent_vec(sentences):
         import params
-        # 加载词向量
-        (words, We) = data_io.getWordmap(wordfile)
-        # word2weight['str'] is the weight for the word 'str'
-        word2weight = data_io.getWordWeight(weightfile, weightpara)
-        weight4ind = data_io.getWeight(words, word2weight)
         # 详见data_io.py
         x, m = data_io.sentences2idx(sentences, words)
         w = data_io.seq2weight(x, m, weight4ind)
@@ -136,13 +139,24 @@ def summary_func(title, content):
         dist = vec_dist1[key] * a + vec_dist2[key] * t
         vec_dist[key] = dist
 
+    vec_list_1 = list(vec_dist.items())
+    vec_list_2 = []
+    for l in vec_list_1:
+        vec_list_2.append(list(l))
+
+    for l in vec_list_2:
+        l.append(vec_list_2.index(l))
+    res = sorted(vec_list_2, key=lambda d: d[1], reverse=True)
+    res = sorted(res, key=lambda d: d[2])
+
     # 排序并取出近似度最近的5句话
-    res = sorted(vec_dist.items(), key=lambda d: d[1], reverse=True)
+    # res = sorted(vec_dist.items(), key=lambda d: d[1], reverse=True)
     # print(res)
     # print(type(res[1][0]))
     result = ''
     # 考虑生成摘要句子的句子顺序是否会影响，标记在原文的顺序
-    for i in range(4):
+    size = (len(res) // 3) + 1
+    for i in range(size):
         print(res[i][0])
         result += res[i][0]
 

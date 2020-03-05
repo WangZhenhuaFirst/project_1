@@ -10,23 +10,22 @@ import os
 from gensim.models import Word2Vec
 
 
-
-
-fulltext = []
-while True:
-    try:
-        fulltext.append(input('请输入目标文本：'))
-    except:
-        break
-#fulltext = input('请输入目标文章全文：')
-fulltext = ''.join(fulltext)
-print('fulltext:',fulltext)
-print('type of fulltext:', type(fulltext))
-#fulltext = fulltext.split()
 # 输入文章及标题
 title = input('请输入目标文章的标题：')
 title = title.strip()
 title = ''.join(title.split())
+
+#输入全文
+fulltext_list = []
+print('请输入全文内容，按回车键结束：')
+while True:
+    temp = input()
+    if temp == '':
+        break
+    fulltext_list.append(temp)
+fulltext = ''.join(fulltext_list)
+
+
 # 将文章按照汉语结束标点切分成句子（生成器）
 def cuto_sentences(article):
     if not isinstance(article, str):
@@ -118,8 +117,8 @@ for key in Vsj:
     vec_dist2[key] = dist2
 
 #生成摘要的函数用到的超参数
-a = 0.8
-t = 0.2
+a = 0.6
+t = 0.4
 #计算句向量与全文向量和标题向量的加权值，用来判断句向量与全文和标题的近似成都
 vec_dist = {}
 for key in Vsj:

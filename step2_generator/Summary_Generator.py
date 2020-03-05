@@ -56,8 +56,8 @@ def article_sents(article):
 
 
 # 词向量文件，词频文件，超参数设置
-wordfile = '../step2_generator/without_stopwords/word2vec_format.txt'
-weightfile = '../step2_generator/without_stopwords/words_count.txt'
+wordfile = './step2_generator/without_stopwords/word2vec_format.txt'
+weightfile = './step2_generator/without_stopwords/words_count.txt'
 # the parameter in the SIF weighting scheme, usually in the range [3e-5, 3e-3]
 weightpara = 1e-3
 rmpc = 1  # number of principal components to remove in SIF weighting scheme
@@ -111,10 +111,9 @@ Vt = get_sent_vec(title.split())
 dVt = Vt[title].tolist()
 # print('dVt:',dVt)
 
-# 计算句向量余弦距离的函数
-
 
 def get_dist(v1, v2):
+    '''计算句向量余弦距离的函数'''
     get_dist = np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
     return get_dist
 

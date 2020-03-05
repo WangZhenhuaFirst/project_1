@@ -19,6 +19,7 @@ import data_io
 import re
 import os
 import SIF_core
+import pdb
 
 
 # 词向量文件，词频文件，超参数设置
@@ -32,6 +33,7 @@ def summary_func(title, content):
     # 输入文章及标题
     # title = input('请输入目标文章的标题：')
     title = title.strip()
+    # 去掉标题中间可能存在的空格(可以用正则表达式做吗？？？)
     title = ''.join(title.split())
     # print(type(title))
     # fulltext = input('请输入目标文章全文：')
@@ -40,6 +42,7 @@ def summary_func(title, content):
     # fulltext = fulltext.split()
 
     # 将文章按照汉语结束标点切分成句子（生成器）
+
     def cuto_sentences(article):
         if not isinstance(article, str):
             article = str(article)
@@ -64,9 +67,9 @@ def summary_func(title, content):
     # 生成句向量的函数
     def get_sent_vec(sentences):
         import params
-        # 详见data_io.py
+        # 加载词向量
         (words, We) = data_io.getWordmap(wordfile)
-        # 详见data_io.py
+        # word2weight['str'] is the weight for the word 'str'
         word2weight = data_io.getWordWeight(weightfile, weightpara)
         weight4ind = data_io.getWeight(words, word2weight)
         # 详见data_io.py

@@ -17,9 +17,9 @@ We = model_100.wv.vectors
 
 # input
 # word vector file, can be downloaded from GloVe website
-wordfile = '../step2_generator/step2_generator/without_stopwords/word2vec_format.txt'
+wordfile = './step2_generator/step2_generator/without_stopwords/word2vec_format.txt'
 # each line is a word and its frequency
-weightfile = '../step2_generator/step2_generator/without_stopwords/words_count.txt'
+weightfile = './step2_generator/step2_generator/without_stopwords/words_count.txt'
 # the parameter in the SIF weighting scheme, usually in the range [3e-5, 3e-3]
 weightpara = 1e-3
 rmpc = 1  # number of principal components to remove in SIF weighting scheme

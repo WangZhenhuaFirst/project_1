@@ -140,8 +140,18 @@ for key in Vsj:
     dist = vec_dist1[key] * a + vec_dist2[key] * t
     vec_dist[key] = dist
 
+vec_list_1 = list(vec_dist.items())
+vec_list_2 = []
+for l in vec_list_1:
+    vec_list_2.append(list(l))
+
+for l in vec_list_2:
+    l.append(vec_list_2.index(l))
+res = sorted(vec_list_2, key=lambda d: d[1], reverse=True)
+res = sorted(res, key=lambda d: d[2])
+
 # 排序并取出近似度最近的5句话
-res = sorted(vec_dist.items(), key=lambda d: d[1], reverse=True)
+# res = sorted(vec_dist.items(), key=lambda d: d[1], reverse=True)
 print(res)
 print(type(res[1][0]))
 result = ''

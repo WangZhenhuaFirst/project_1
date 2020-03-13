@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.decomposition import TruncatedSVD
+import pdb
 
 
 def get_weighted_average(We, x, w):

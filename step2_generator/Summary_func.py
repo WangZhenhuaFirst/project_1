@@ -26,10 +26,10 @@ weightpara = 1e-3
 rmpc = 1
 
 # 词向量文件，词频文件，超参数设置
-# wordfile = './step2_generator/without_stopwords/word2vec_format.txt'
-# weightfile = './step2_generator/without_stopwords/words_count.txt'
-wordfile = './step2_generator/without_stopwords/all_vec_format.txt'
-weightfile = './step2_generator/without_stopwords/all_words_count.txt'
+wordfile = './step2_generator/without_stopwords/word2vec_format.txt'
+weightfile = './step2_generator/without_stopwords/words_count.txt'
+# wordfile = './step2_generator/without_stopwords/all_vec_format.txt'
+# weightfile = './step2_generator/without_stopwords/all_words_count.txt'
 
 # 详见data_io.py
 (words, We) = data_io.getWordmap(wordfile)
@@ -146,6 +146,7 @@ def summary_func(title, content):
 
     for l in vec_list_2:
         l.append(vec_list_2.index(l))
+
     res = sorted(vec_list_2, key=lambda d: d[1], reverse=True)
     res = sorted(res, key=lambda d: d[2])
 

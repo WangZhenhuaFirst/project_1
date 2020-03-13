@@ -28,7 +28,7 @@ title = ''.join(title.split())
 # print(type(title))
 fulltext = input('请输入目标文章全文：')
 # print('fulltext:',fulltext)
-#fulltext = fulltext.split()
+# fulltext = fulltext.split()
 
 # 将文章按照汉语结束标点切分成句子（生成器）
 
@@ -104,7 +104,7 @@ Vsj = get_sent_vec(articleTosents)
 # 全文向量
 wholearticle = ''.join(fulltext.split())
 # print('wholearticle:',wholearticle)
-#print('type of wholearticle:',type(wholearticle))
+# print('type of wholearticle:',type(wholearticle))
 Vc = get_sent_vec(wholearticle.split())
 # print('Vc[wholearticle]:',Vc)
 dVc = Vc[wholearticle].tolist()
@@ -152,19 +152,24 @@ for l in vec_list_1:
 
 for l in vec_list_2:
     l.append(vec_list_2.index(l))
+
 res = sorted(vec_list_2, key=lambda d: d[1], reverse=True)
+size = (len(res) // 3) + 1
+res = res[0:size]
 res = sorted(res, key=lambda d: d[2])
+# 考虑生成摘要句子的句子顺序是否会影响，标记在原文的顺序
+result = ''
+for i in res:
+    result += i[0]
 
 # 排序并取出近似度最近的5句话
 # res = sorted(vec_dist.items(), key=lambda d: d[1], reverse=True)
-print(res)
-print(type(res[1][0]))
-result = ''
-# 取原文句子数的 1/3左右作为摘要
-size = (len(res) // 3) + 1
-for i in range(size):
-    print(res[i][0])
-    result += res[i][0]
+# print(res)
+# print(type(res[1][0]))
+# result = ''
+# for i in range(5):
+#     print(res[i][0])
+#     result += res[i][0]
 
 # 输出摘要文章
 print('参考摘要为：', result)

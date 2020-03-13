@@ -138,6 +138,8 @@ def summary_func(title, content):
     for key in Vsj:
         dist = vec_dist1[key] * a + vec_dist2[key] * t
         vec_dist[key] = dist
+    # print(vec_dist)
+    # print(type(vec_dist))
 
     vec_list_1 = list(vec_dist.items())
     vec_list_2 = []
@@ -148,18 +150,22 @@ def summary_func(title, content):
         l.append(vec_list_2.index(l))
 
     res = sorted(vec_list_2, key=lambda d: d[1], reverse=True)
+    size = (len(res) // 3) + 1
+    res = res[0:size]
     res = sorted(res, key=lambda d: d[2])
+    # 考虑生成摘要句子的句子顺序是否会影响，标记在原文的顺序
+    result = ''
+    for i in res:
+        result += i[0]
 
     # 排序并取出近似度最近的5句话
     # res = sorted(vec_dist.items(), key=lambda d: d[1], reverse=True)
     # print(res)
     # print(type(res[1][0]))
-    result = ''
-    # 考虑生成摘要句子的句子顺序是否会影响，标记在原文的顺序
-    size = (len(res) // 3) + 1
-    for i in range(size):
-        print(res[i][0])
-        result += res[i][0]
+    # result = ''
+    # for i in range(5):
+    #     print(res[i][0])
+    #     result += res[i][0]
 
     # 输出摘要文章
     # print('参考摘要为：',result)

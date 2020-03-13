@@ -150,7 +150,7 @@ def summary_func(title, content):
         l.append(vec_list_2.index(l))
 
     res = sorted(vec_list_2, key=lambda d: d[1], reverse=True)
-    size = (len(res) // 3) + 1
+    size = (len(res) // 5) + 1
     res = res[0:size]
     res = sorted(res, key=lambda d: d[2])
     # 考虑生成摘要句子的句子顺序是否会影响，标记在原文的顺序

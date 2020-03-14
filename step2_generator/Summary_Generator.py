@@ -35,28 +35,19 @@ while True:
 fulltext = ''.join(fulltext_list)
 
 
-def cuto_sentences(article):
-    '''将文章按照汉语结束标点切分成句子（生成器）'''
+def article_sents(article):
+    '''将文章按照汉语结束标点切分成句子，将生成的句子放入列表待用'''
     if not isinstance(article, str):
         article = str(article)
-    puns = frozenset(u'。！？；')
-    tmp = []
-    for ch in article:
-        tmp.append(ch)
-        if puns.__contains__(ch):
-            yield ''.join(tmp)
-            tmp = []
-    yield ''.join(tmp)
-
-
-def article_sents(article):
-    '''将生成的句子放入列表待用'''
-    article = article.strip()
-    sentences = []
-    for i in cuto_sentences(article):
-        if i:
-            sentences.append(i.strip())
-    return sentences
+    article = re.sub('([。！？\?])([^”’])', r"\1\n\2",
+                     article)  # 普通断句符号且后面没有引号
+    article = re.sub('(\.{6})([^”’])', r"\1\n\2", article)  # 英文省略号且后面没有引号
+    article = re.sub('(\…{2})([^”’])', r"\1\n\2", article)  # 中文省略号且后面没有引号
+    article = re.sub('([.。！？\?\.{6}\…{2}][’”])([^’”])',
+                     r'\1\n\2', article)  # 断句号+引号且后面没有引号
+    article = article.rstrip()  # 段尾如果有多余的\n就去掉它
+    # 很多规则中会考虑分号;，但是这里我把它忽略不计，破折号、英文双引号等同样忽略，需要的再做些简单调整即可。
+    return article.split("\n")
 
 
 # the parameter in the SIF weighting scheme, usually in the range [3e-5, 3e-3]
@@ -100,7 +91,7 @@ def get_sent_vec(sentences):
 
 # 处理文章，分别计算全文向量，句向量，标题向量
 articleTosents = article_sents(fulltext)
-# print('articleTosents:',articleTosents)# 调试用
+print('articleTosents:', articleTosents)  # 调试用
 Vsj = get_sent_vec(articleTosents)
 # print('Vsj[articleTosents]:',Vsj)
 

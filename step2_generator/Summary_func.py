@@ -19,6 +19,12 @@ import data_io
 import re
 import os
 import SIF_core
+import PIL
+import wordcloud
+import jieba
+import matplotlib.pyplot as plt
+import string
+import random
 import pdb
 
 
@@ -49,31 +55,37 @@ def summary_func(title, content):
     # print('fulltext:',fulltext)
     # fulltext = fulltext.split()
 
-    # 将文章按照汉语结束标点切分成句子（生成器）
-
-    def cuto_sentences(article):
-        if not isinstance(article, str):
-            article = str(article)
-        puns = frozenset(u'。！？；')
-        tmp = []
-        for ch in article:
-            tmp.append(ch)
-            if puns.__contains__(ch):
-                yield ''.join(tmp)
-                tmp = []
-        yield ''.join(tmp)
-    # 将生成的句子放入列表待用
+    # 生成词云图
+    text1 = fulltext
+    # 导入图片
+    image1 = PIL.Image.open(
+        r'./step2_generator/without_stopwords/blackboard_word_cloud.jpg')
+    MASK = np.array(image1)
+    WC = wordcloud.WordCloud(font_path="/System/Library/fonts/PingFang.ttc", max_words=100, mask=MASK,
+                             height=400, width=400, background_color='white', repeat=False, mode='RGBA')  # 设置词云图对象属性
+    st1 = re.sub('[，。、“”‘ ’]', '', str(text1))  # 使用正则表达式将符号替换掉。
+    conten = ' '.join(jieba.lcut(st1))  # 此处分词之间要有空格隔开，联想到英文书写方式，每个单词之间都有一个空格。
+    con = WC.generate(conten)
+    img_name = ''.join(random.sample(string.ascii_letters + string.digits, 8))
+    con.to_file(f"./step2_generator/static/{img_name}.png")
+    img_path = f"static/{img_name}.png"
 
     def article_sents(article):
-        article = article.strip()
-        sentences = []
-        for i in cuto_sentences(article):
-            if i:
-                sentences.append(i.strip())
-        return sentences
+        '''将文章按照汉语结束标点切分成句子，将生成的句子放入列表待用'''
+        if not isinstance(article, str):
+            article = str(article)
+        article = re.sub('([。！？\?])([^”’])', r"\1\n\2",
+                         article)  # 普通断句符号且后面没有引号
+        article = re.sub('(\.{6})([^”’])', r"\1\n\2", article)  # 英文省略号且后面没有引号
+        article = re.sub('(\…{2})([^”’])', r"\1\n\2", article)  # 中文省略号且后面没有引号
+        article = re.sub('([.。！？\?\.{6}\…{2}][’”])([^’”])',
+                         r'\1\n\2', article)  # 断句号+引号且后面没有引号
+        article = article.rstrip()  # 段尾如果有多余的\n就去掉它
+        # 很多规则中会考虑分号;，但是这里我把它忽略不计，破折号、英文双引号等同样忽略，需要的再做些简单调整即可。
+        return article.split("\n")
 
-    # 生成句向量的函数
     def get_sent_vec(sentences):
+        '''生成句向量的函数'''
         import params
         # 详见data_io.py
         x, m = data_io.sentences2idx(sentences, words)
@@ -93,7 +105,7 @@ def summary_func(title, content):
 
     # 处理文章，分别计算全文向量，句向量，标题向量
     articleTosents = article_sents(fulltext)
-    # print('articleTosents:',articleTosents)# 调试用
+    print('articleTosents:', articleTosents)  # 调试用
     Vsj = get_sent_vec(articleTosents)
     # print('Vsj[articleTosents]:',Vsj)
 
@@ -169,4 +181,4 @@ def summary_func(title, content):
 
     # 输出摘要文章
     # print('参考摘要为：',result)
-    return result
+    return result, img_path

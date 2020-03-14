@@ -25,15 +25,18 @@ import pdb
 title = input('请输入目标文章的标题：')
 title = title.strip()
 title = ''.join(title.split())
-# print(type(title))
-fulltext = input('请输入目标文章全文：')
-# print('fulltext:',fulltext)
-# fulltext = fulltext.split()
-
-# 将文章按照汉语结束标点切分成句子（生成器）
+fulltext_list = []
+print('请输入全文内容，按回车键结束：')
+while True:
+    temp = input()
+    if temp == '':
+        break
+    fulltext_list.append(temp)
+fulltext = ''.join(fulltext_list)
 
 
 def cuto_sentences(article):
+    '''将文章按照汉语结束标点切分成句子（生成器）'''
     if not isinstance(article, str):
         article = str(article)
     puns = frozenset(u'。！？；')
@@ -44,10 +47,10 @@ def cuto_sentences(article):
             yield ''.join(tmp)
             tmp = []
     yield ''.join(tmp)
-# 将生成的句子放入列表待用
 
 
 def article_sents(article):
+    '''将生成的句子放入列表待用'''
     article = article.strip()
     sentences = []
     for i in cuto_sentences(article):

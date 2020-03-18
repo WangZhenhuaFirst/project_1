@@ -11,13 +11,15 @@
     <form action="abstract" method="POST" role="form">
         <div class="form-group">
             <label for="name">标题</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="请输入文章标题">
+            <input type="text" class="form-control" id="title" name="title" placeholder="请输入文章标题"
+                oninvalid="setCustomValidity('标题不能为空')" oninput="setCustomValidity('')" required>
         </div>
         <br />
         <br />
         <div class="form-group">
             <label for="name">正文</label>
-            <textarea class="form-control" rows="8" id="content" name="content" placeholder="请输入文章正文"></textarea>
+            <textarea class="form-control" rows="8" id="content" name="content" placeholder="请输入文章正文"
+                oninvalid="setCustomValidity('正文不能为空')" oninput="setCustomValidity('')" required></textarea>
         </div>
         <br />
         <button type="submit" class="btn btn-default">生成摘要</button>

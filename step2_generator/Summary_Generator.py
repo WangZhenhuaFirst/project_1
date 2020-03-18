@@ -58,10 +58,10 @@ weightpara = 1e-3
 # wordfile = './step2_generator/without_stopwords/word2vec_format.txt'
 # weightfile = './step2_generator/without_stopwords/words_count.txt'
 
-# wordfile = './step2_generator/without_stopwords/all_vec_format.txt'
-# weightfile = './step2_generator/without_stopwords/all_words_count.txt'
-wordfile = './step2_generator/without_stopwords/all_vec_format_200.txt'
+wordfile = './step2_generator/without_stopwords/all_vec_format.txt'
 weightfile = './step2_generator/without_stopwords/all_words_count.txt'
+# wordfile = './step2_generator/without_stopwords/all_vec_format_200.txt'
+# weightfile = './step2_generator/without_stopwords/all_words_count.txt'
 
 # 详见data_io.py
 (words, We) = data_io.getWordmap(wordfile)

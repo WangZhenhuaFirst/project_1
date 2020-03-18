@@ -36,6 +36,8 @@ wordfile = './step2_generator/without_stopwords/word2vec_format.txt'
 weightfile = './step2_generator/without_stopwords/words_count.txt'
 # wordfile = './step2_generator/without_stopwords/all_vec_format.txt'
 # weightfile = './step2_generator/without_stopwords/all_words_count.txt'
+wordfile = './step2_generator/without_stopwords/all_vec_format_200.txt'
+weightfile = './step2_generator/without_stopwords/all_words_count.txt'
 
 # 详见data_io.py
 (words, We) = data_io.getWordmap(wordfile)
@@ -130,7 +132,7 @@ def summary_func(title, content):
         get_dist = np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
         return get_dist
 
-    # 分别计算句向量中每一句与全文向量和标题向量的余弦距离，存为字典
+    # 分别计算句向量中每一句与全文向量和标题向量的余弦相似度，存为字典
     vec_dist1 = {}
     vec_dist2 = {}
 
@@ -145,7 +147,7 @@ def summary_func(title, content):
     # 生成摘要的函数用到的超参数
     a = 0.8
     t = 0.2
-    # 计算句向量与全文向量和标题向量的加权值，用来判断句向量与全文和标题的近似成都
+    # 计算句向量与全文向量和标题向量的加权值，用来判断句向量与全文和标题的近似程度
     vec_dist = {}
     for key in Vsj:
         dist = vec_dist1[key] * a + vec_dist2[key] * t

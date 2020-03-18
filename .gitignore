@@ -6,6 +6,9 @@ zhwiki-20191120-pages-articles-multistream.xml.bz2
 Step1_preprocessing/all_vec_format.txt
 Step1_preprocessing/all_vec.model.trainables.syn1neg.npy
 Step1_preprocessing/all_vec.model.wv.vectors.npy
+Step1_preprocessing/all_vec_200.model
+Step1_preprocessing/all_vec_200.model.trainables.syn1neg.npy
+Step1_preprocessing/all_vec_200.model.wv.vectors.npy
 
 /Step1_preprocessing/articles_after_segs.txt
 /Step1_preprocessing/news_corpus.txt
@@ -18,3 +21,5 @@ news_vec.model.wv.vectors.npy
 
 /step2_generator/without_stopwords/word2vec_format.txt
 step2_generator/without_stopwords/all_vec_format.txt
+step2_generator/without_stopwords/all_vec_format_200.txt
+step2_generator/static/

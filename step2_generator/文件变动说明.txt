@@ -1,7 +1,0 @@
-2020/3/4增加：
-1，佟博设计的KNN平滑算法文件：knn_smooth_by_tb.py
-2，加入KNN平滑的生成器文件：Summary_Generatorv1.0_with_knn.py
-3，加入段向量评估与词云图功能的生成器文件：Summary_Generatorv1.1_add_wordcloud_paragraphvec.py
-注：
-a，新import的库有PIL，wordcloud等，详见py代码。
-b，生成词云图是需要用到的背景图片更新到了without_stopwords文件夹内，请下载到本地对应文件夹。
